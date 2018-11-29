@@ -6,17 +6,20 @@ import java.util.ArrayList;
 public class DatabaseStandard implements DatabaseInterface{
 
     HashMap<String, String> passwordDictionary;
+    Tester tester = new Tester();
 
     public static void main(String[] args){
+        /*
         PasswordCracker testCracker = new PasswordCracker();
         DatabaseStandard database1 = new DatabaseStandard();
-        ArrayList<String> commonPasswords = new ArrayList<String>();
-        commonPasswords.add("123456");
-        commonPasswords.add("password");
-        commonPasswords.add("12345678");
-        commonPasswords.add("brady");
-        testCracker.createDatabase(commonPasswords, database1);
+        //ArrayList<String> commonPasswords = Tester.readCommonPasswords("C:\\Users\\grayd\\OneDrive\\Documents\\University of Ottawa\\Second Year\\CSI 2110\\PasswordCracker\\a4filesprovided\\a4filesprovided\\commonPwd10K.txt");
+
+        //testCracker.createDatabase(commonPasswords, database1);
         database1.printStatistics();
+        String code = new String("F35D55B3ACF667911A679B44918F5D88B2400823");
+        String discoveredPassword = testCracker.crackPassword(code, database1);
+        System.out.println("Decrypt: " + code + " Password: " + discoveredPassword);
+        */
     }
 
     public DatabaseStandard(){

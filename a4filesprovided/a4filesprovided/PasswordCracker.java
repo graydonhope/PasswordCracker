@@ -7,16 +7,20 @@ import java.util.HashMap;
 public class PasswordCracker{
 
     Sha1 sha1Encrypter;
+    AugmentedPasswords augmentPasswords = new AugmentedPasswords();
+    ArrayList<String> augmentedPasswords = new ArrayList<String>();
+
+
     
     public void createDatabase(ArrayList<String> commonPasswords, DatabaseInterface database){
-        ArrayList<String> augmentedPasswords = augmentPasswords(commonPasswords);
+        augmentedPasswords = augmentPasswords(commonPasswords);
         sha1Encrypter = new Sha1();
         int passwordListLength = augmentedPasswords.size();
         for(int i = 0; i < passwordListLength; i++){
             // Hash password using SHA256 encyption. Add the hashed password and original password to the dictionary (Key being the hashed password)
             try{
                 String hashedPassword = sha1Encrypter.hash(augmentedPasswords.get(i));
-                database.save(hashedPassword, augmentedPasswords.get(i));
+                database.save(augmentedPasswords.get(i), hashedPassword);
             }            
             catch(UnsupportedEncodingException e){
                e.printStackTrace();
@@ -26,7 +30,7 @@ public class PasswordCracker{
     }
 
 
-    private String crackPassword(String encryptedPassword, DatabaseInterface database){    
+    public String crackPassword(String encryptedPassword, DatabaseInterface database){    
         // Uses database to crack encrypted password, returning the originial password
         return database.decrypt(encryptedPassword);
     }
@@ -35,15 +39,12 @@ public class PasswordCracker{
     private ArrayList<String> augmentPasswords(ArrayList<String> commonPasswords){
         // This is the main part of the program. If the password is not in the database, it will be null.
         //At each password in the List, send to each method and add in the augmented word
-        for(int i = 0; i < commonPasswords.size(); i++){
 
+        for(int i = 0; i < commonPasswords.size(); i++){
+            augmentedPasswords.addAll(augmentPasswords.getAllPermutations(commonPasswords.get(i)));
         }
-      //  commonPasswords.addAll(capitalizeFirstChar(commonPasswords));
-        //commonPasswords.addAll(replaceA(commonPasswords));
-      //  commonPasswords.addAll(replaceE(commonPasswords));
-       // commonPasswords.addAll(replaceI(commonPasswords));
-       // commonPasswords.addAll(addYear(commonPasswords));
-        return commonPasswords;
+
+        return augmentedPasswords;
     }
 
     private String capitalizeFirstChar(String commonPassword){

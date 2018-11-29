@@ -102,6 +102,8 @@ public class Tester {
 		
 		System.out.println("\n***** Part 1: Testing StandardDatabase *****");
 		
+
+		
 		DatabaseStandard db1=new DatabaseStandard(); //**** testing your class DatabaseStandard
 		
 		long time,afterTime;
@@ -124,6 +126,7 @@ public class Tester {
 		
 		//Scanner scan3 = new Scanner(System.in);
 		String ans = scan.nextLine();
+		
 		
 	    if (ans.equals("y") || ans.equals("Y")) {
 		
@@ -149,7 +152,7 @@ public class Tester {
 	    	findPasswords(leakedAccountsFile, db2); // call our method above to crack and print the passwords 
 	    	
 	    	
-	    																										
+	    																									
 		
 	    }
 	    System.out.println("End of Program.");
