@@ -24,7 +24,7 @@ public class DatabaseStandard implements DatabaseInterface{
 
     public DatabaseStandard(){
          //Creates initial hash map
-         passwordDictionary = new HashMap<String, String>();
+         passwordDictionary = new HashMap<String, String>(188011);
     }
     
 
@@ -52,7 +52,7 @@ public class DatabaseStandard implements DatabaseInterface{
     public void printStatistics(){
         // print statistics based on type of Database
         int numberOfPasswords = passwordDictionary.size();
-        int numberOfIndexesWhenCreated = -9999;
+        int numberOfIndexesWhenCreated = 188011;
         System.out.println("*** Database Statistics ***" + "\n" + "Size is " + numberOfPasswords + "\n" 
         + "Initial Number of Indexes when Created " + numberOfIndexesWhenCreated + "\n" + "*** End of Database Statistics ***");
 

@@ -32,7 +32,12 @@ public class PasswordCracker{
 
     public String crackPassword(String encryptedPassword, DatabaseInterface database){    
         // Uses database to crack encrypted password, returning the originial password
-        return database.decrypt(encryptedPassword);
+        if(database.decrypt(encryptedPassword) == null){
+            return "";
+        }
+        else{
+            return database.decrypt(encryptedPassword);
+        }
     }
 
 

@@ -80,9 +80,9 @@ public class Tester {
 			}
 	     }
 
-	     catch (Exception e) {
+	     catch (IOException e) {
 		  System.out.println("Something Wrong in findPasswords");
-	     }
+	    }
 		
 	}
 
