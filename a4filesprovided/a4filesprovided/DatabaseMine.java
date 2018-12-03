@@ -10,9 +10,9 @@ public class DatabaseMine implements DatabaseInterface{
     // to hold the entries you will insert; you may experiment with primes N
     public DatabaseMine(){
         //Pick suitable N value without knowing the number of words going into the dictionary.
-        this.N = 188011;
+        this.N = 237509;
         this.numberOfProbes = 0;
-        this.passwordDictionary = new MyHashMap(this.N);      // Use my object!!!
+        this.passwordDictionary = new MyHashMap(this.N);      // Using my object
     }
 
     public DatabaseMine(int N_given){
@@ -21,11 +21,14 @@ public class DatabaseMine implements DatabaseInterface{
         }
         this.N = N_given;
         this.numberOfProbes = 0;
-        this.passwordDictionary = new MyHashMap(this.N);   // Use my object!!!
+        this.passwordDictionary = new MyHashMap(this.N);   // Using my object
     }
 
-    // Saves password to the Hashmap. Remember the order when creating hash map!
+    // Saves password to the Hashmap. Remember the order when creating hash map.
     public String save(String plainPassword, String encryptedPassword){
+        if(plainPassword == null || encryptedPassword == null){
+            throw new IllegalArgumentException();
+        }
         String valueAtKey = passwordDictionary.get(encryptedPassword);
         passwordDictionary.put(encryptedPassword, plainPassword);
         return valueAtKey;
@@ -33,6 +36,9 @@ public class DatabaseMine implements DatabaseInterface{
 	
 	// returns plain password corresponding to encrypted password
 	public String decrypt(String encryptedPassword){
+        if(encryptedPassword == null){
+            throw new IllegalArgumentException();
+        }
         return passwordDictionary.get(encryptedPassword);
     } 
 
@@ -46,6 +52,9 @@ public class DatabaseMine implements DatabaseInterface{
     }
 
     public int hashFunction(String key) {
+        if(key == null){
+            throw new IllegalArgumentException();
+        }
         int address=key.hashCode()%N;
         return (address>=0)?address:(address+N);
     }

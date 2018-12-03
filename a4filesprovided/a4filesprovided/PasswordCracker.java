@@ -13,6 +13,9 @@ public class PasswordCracker{
 
     
     public void createDatabase(ArrayList<String> commonPasswords, DatabaseInterface database){
+        if(commonPasswords == null || database == null){
+            throw new IllegalArgumentException();
+        }
         augmentedPasswords = augmentPasswords(commonPasswords);
         sha1Encrypter = new Sha1();
         int passwordListLength = augmentedPasswords.size();
@@ -32,6 +35,9 @@ public class PasswordCracker{
 
     public String crackPassword(String encryptedPassword, DatabaseInterface database){    
         // Uses database to crack encrypted password, returning the originial password
+        if(database == null){
+            throw new IllegalArgumentException("Database cannot be null");
+        }
         if(database.decrypt(encryptedPassword) == null){
             return "";
         }
@@ -44,7 +50,9 @@ public class PasswordCracker{
     private ArrayList<String> augmentPasswords(ArrayList<String> commonPasswords){
         // This is the main part of the program. If the password is not in the database, it will be null.
         //At each password in the List, send to each method and add in the augmented word
-
+        if(commonPasswords == null){
+            throw new IllegalArgumentException("Array of passwords cannot be null");
+        }
         for(int i = 0; i < commonPasswords.size(); i++){
             augmentedPasswords.addAll(augmentPasswords.getAllPermutations(commonPasswords.get(i)));
         }
@@ -55,7 +63,7 @@ public class PasswordCracker{
     private String capitalizeFirstChar(String commonPassword){
         //Capitalizes the first letter
         if(commonPassword == null){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Password cannot be null");
         }
 
         else {
@@ -64,11 +72,9 @@ public class PasswordCracker{
     }
 
     private ArrayList<String> replaceA(ArrayList<String> commonPasswords){
-
         if(commonPasswords == null){
             throw new IllegalArgumentException();
         }
-
         else{
             for(int i = 0; i < commonPasswords.size(); i++){
                 String password = commonPasswords.get(i);
@@ -82,11 +88,9 @@ public class PasswordCracker{
 
     
     private ArrayList<String> replaceI(ArrayList<String> commonPasswords){
-
         if(commonPasswords == null){
             throw new IllegalArgumentException();
         }
-
         else{
             for(int i = 0; i < commonPasswords.size(); i++){
                 String password = commonPasswords.get(i);
@@ -100,11 +104,9 @@ public class PasswordCracker{
 
 
     private ArrayList<String> replaceE(ArrayList<String> commonPasswords){
-
         if(commonPasswords == null){
             throw new IllegalArgumentException();
         }
-
         else{
             for(int i = 0; i < commonPasswords.size(); i++){
                 String password = commonPasswords.get(i);
@@ -117,7 +119,6 @@ public class PasswordCracker{
     }
 
     private ArrayList<String> addYear(ArrayList<String> commonPasswords){
-        
         if(commonPasswords == null){
             throw new IllegalArgumentException();
         }

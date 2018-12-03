@@ -16,12 +16,14 @@ public class MyHashMap{
         N = 16;
         map = new Entry[N];
         numberOfProbes = 0;
+        numberOfKeys = 0;
     }
 
     public MyHashMap(int hashMapSize){
         N = hashMapSize;
         map = new Entry[N];
         numberOfProbes = 0;
+        numberOfKeys = 0;
     }
 
 
@@ -33,7 +35,7 @@ public class MyHashMap{
         // Returns null if not found
         // No collision
         if(key == null){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("key cannot be null");
         }
       
         if(map[hashFunction(key)] != null){
@@ -59,12 +61,16 @@ public class MyHashMap{
     }
 
     public int hashFunction(String key) {
+        if(key == null){
+            throw new IllegalArgumentException("Key cannot be null");
+        }
         int address=key.hashCode()%N;
         return (address>=0)?address:(address+N);
     }
 
     public double getLoadFactor(){
-        return (this.numberOfKeys / this.N);
+        double loadfactor = (double) this.numberOfKeys / this.N;
+        return loadfactor;
     }
 
     public int getMapSize(){
@@ -80,25 +86,30 @@ public class MyHashMap{
     }
 
     public double getAverageNumberOfProbes(){
-        return (this.getNumberOfProbes() / this.numberOfKeys);
+        double averageProbes = (double) this.getNumberOfProbes() / this.numberOfKeys;
+        return averageProbes;
     }
 
     public void put(String key, String value){
+        if(key == null || value == null){
+            throw new IllegalArgumentException();
+        }
         int locationToPlace = hashFunction(key);
+
         if(map[locationToPlace] != null){
             // Collision
             if(map[locationToPlace].getKey().equals(key)){
+                //Duplication - replace values
                 this.numberOfProbes++;
                 Entry newEntry = new Entry(key, value);
                 map[locationToPlace] = newEntry;
-                this.numberOfKeys++;
             }
             else{
                 int newLocation = newLocation(locationToPlace, key);
                 Entry newEntry = new Entry(key, value);
                 map[newLocation] = newEntry;
-                this.numberOfKeys++;
                 this.numberOfDisplacement++;
+                this.numberOfKeys++;
             }
             
         }
@@ -109,6 +120,7 @@ public class MyHashMap{
             Entry newEntry = new Entry(key, value);
             map[locationToPlace] = newEntry;
             this.numberOfKeys++;
+
         }
     }
 
@@ -116,7 +128,9 @@ public class MyHashMap{
         // Find a new location to place value due to a collision.
         // If the array is full, it will copy the value of the current map into a new array which is twice the size, and recursively call
         // the method again with the same parameters.
-
+        if(key == null){
+            throw new IllegalArgumentException();
+        }
         for(int i = 0; i < this.N; i++){
             if( map[(locationToPlace + i) % N] == null || map[(locationToPlace + i) % N].getKey().equals(key)){
                 // Successful new location
@@ -130,7 +144,6 @@ public class MyHashMap{
         // If it got to this point, it means it did not find a new location, so resize is required.
         resize(); 
         return newLocation(locationToPlace, key);   
-        //return newLocationForValue;
     }
 
     private void resize(){
